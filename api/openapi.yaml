@@ -1,0 +1,550 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: mike.ralphson@gmail.com
+    name: Mike Ralphson
+    url: https://github.com/mermade/aws2openapi
+    x-twitter: PermittedSoc
+  description: "<p>AppConfig Data provides the data plane APIs your application uses\
+    \ to retrieve configuration data. Here's how it works:</p> <p>Your application\
+    \ retrieves configuration data by first establishing a configuration session using\
+    \ the AppConfig Data <a>StartConfigurationSession</a> API action. Your session's\
+    \ client then makes periodic calls to <a>GetLatestConfiguration</a> to check for\
+    \ and retrieve the latest data available.</p> <p>When calling <code>StartConfigurationSession</code>,\
+    \ your code sends the following information:</p> <ul> <li> <p>Identifiers (ID\
+    \ or name) of an AppConfig application, environment, and configuration profile\
+    \ that the session tracks.</p> </li> <li> <p>(Optional) The minimum amount of\
+    \ time the session's client must wait between calls to <code>GetLatestConfiguration</code>.</p>\
+    \ </li> </ul> <p>In response, AppConfig provides an <code>InitialConfigurationToken</code>\
+    \ to be given to the session's client and used the first time it calls <code>GetLatestConfiguration</code>\
+    \ for that session.</p> <important> <p>This token should only be used once in\
+    \ your first call to <code>GetLatestConfiguration</code>. You <i>must</i> use\
+    \ the new token in the <code>GetLatestConfiguration</code> response (<code>NextPollConfigurationToken</code>)\
+    \ in each subsequent call to <code>GetLatestConfiguration</code>.</p> </important>\
+    \ <p>When calling <code>GetLatestConfiguration</code>, your client code sends\
+    \ the most recent <code>ConfigurationToken</code> value it has and receives in\
+    \ response:</p> <ul> <li> <p> <code>NextPollConfigurationToken</code>: the <code>ConfigurationToken</code>\
+    \ value to use on the next call to <code>GetLatestConfiguration</code>.</p> </li>\
+    \ <li> <p> <code>NextPollIntervalInSeconds</code>: the duration the client should\
+    \ wait before making its next call to <code>GetLatestConfiguration</code>. This\
+    \ duration may vary over the course of the session, so it should be used instead\
+    \ of the value sent on the <code>StartConfigurationSession</code> call.</p> </li>\
+    \ <li> <p>The configuration: the latest data intended for the session. This may\
+    \ be empty if the client already has the latest version of the configuration.</p>\
+    \ </li> </ul> <important> <p>The <code>InitialConfigurationToken</code> and <code>NextPollConfigurationToken</code>\
+    \ should only be used once. To support long poll use cases, the tokens are valid\
+    \ for up to 24 hours. If a <code>GetLatestConfiguration</code> call uses an expired\
+    \ token, the system returns <code>BadRequestException</code>.</p> </important>\
+    \ <p>For more information and to view example CLI commands that show how to retrieve\
+    \ a configuration using the AppConfig Data <code>StartConfigurationSession</code>\
+    \ and <code>GetLatestConfiguration</code> API actions, see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-the-configuration\"\
+    >Retrieving the configuration</a> in the <i>AppConfig User Guide</i>.</p>"
+  license:
+    name: Apache 2.0 License
+    url: http://www.apache.org/licenses/
+  termsOfService: https://aws.amazon.com/service-terms/
+  title: AWS AppConfig Data
+  version: 2021-11-11
+  x-release: v4
+  x-logo:
+    url: https://twitter.com/awscloud/profile_image?size=original
+    backgroundColor: '#FFFFFF'
+  x-providerName: amazonaws.com
+  x-serviceName: appconfigdata
+  x-aws-signingName: appconfig
+  x-origin:
+  - contentType: application/json
+    url: https://raw.githubusercontent.com/aws/aws-sdk-js/master/apis/appconfigdata-2021-11-11.normal.json
+    converter:
+      url: https://github.com/mermade/aws2openapi
+      version: 1.0.0
+    x-apisguru-driver: external
+  x-apiClientRegistration:
+    url: https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct
+  x-apisguru-categories:
+  - cloud
+  x-preferred: true
+externalDocs:
+  description: Amazon Web Services documentation
+  url: https://docs.aws.amazon.com/appconfigdata/
+servers:
+- description: The AWS AppConfig Data multi-region endpoint
+  url: "http://appconfigdata.{region}.amazonaws.com"
+  variables:
+    region:
+      default: us-east-1
+      description: The AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - us-gov-west-1
+      - us-gov-east-1
+      - ca-central-1
+      - eu-north-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-south-1
+      - af-south-1
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-northeast-3
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-east-1
+      - ap-south-1
+      - sa-east-1
+      - me-south-1
+- description: The AWS AppConfig Data multi-region endpoint
+  url: "https://appconfigdata.{region}.amazonaws.com"
+  variables:
+    region:
+      default: us-east-1
+      description: The AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - us-gov-west-1
+      - us-gov-east-1
+      - ca-central-1
+      - eu-north-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-south-1
+      - af-south-1
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-northeast-3
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-east-1
+      - ap-south-1
+      - sa-east-1
+      - me-south-1
+- description: The AWS AppConfig Data endpoint for China (Beijing) and China (Ningxia)
+  url: "http://appconfigdata.{region}.amazonaws.com.cn"
+  variables:
+    region:
+      default: cn-north-1
+      description: The AWS region
+      enum:
+      - cn-north-1
+      - cn-northwest-1
+- description: The AWS AppConfig Data endpoint for China (Beijing) and China (Ningxia)
+  url: "https://appconfigdata.{region}.amazonaws.com.cn"
+  variables:
+    region:
+      default: cn-north-1
+      description: The AWS region
+      enum:
+      - cn-north-1
+      - cn-northwest-1
+security:
+- hmac: []
+paths:
+  /configuration#configuration_token:
+    get:
+      description: "<p>Retrieves the latest deployed configuration. This API may return\
+        \ empty configuration data if the client already has the latest version. For\
+        \ more information about this API action and to view example CLI commands\
+        \ that show how to use it with the <a>StartConfigurationSession</a> API action,\
+        \ see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-the-configuration\"\
+        >Retrieving the configuration</a> in the <i>AppConfig User Guide</i>. </p>\
+        \ <important> <p>Note the following important information.</p> <ul> <li> <p>Each\
+        \ configuration token is only valid for one call to <code>GetLatestConfiguration</code>.\
+        \ The <code>GetLatestConfiguration</code> response includes a <code>NextPollConfigurationToken</code>\
+        \ that should always replace the token used for the just-completed call in\
+        \ preparation for the next one. </p> </li> <li> <p> <code>GetLatestConfiguration</code>\
+        \ is a priced call. For more information, see <a href=\"https://aws.amazon.com/systems-manager/pricing/\"\
+        >Pricing</a>.</p> </li> </ul> </important>"
+      operationId: GetLatestConfiguration
+      parameters:
+      - explode: false
+        in: header
+        name: X-Amz-Content-Sha256
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Date
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Algorithm
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Credential
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Security-Token
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Signature
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-SignedHeaders
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: "<p>Token describing the current state of the configuration session.\
+          \ To obtain a token, first call the <a>StartConfigurationSession</a> API.\
+          \ Note that every call to <code>GetLatestConfiguration</code> will return\
+          \ a new <code>ConfigurationToken</code> (<code>NextPollConfigurationToken</code>\
+          \ in the response) and <i>must</i> be provided to subsequent <code>GetLatestConfiguration</code>\
+          \ API calls.</p> <important> <p>This token should only be used once. To\
+          \ support long poll use cases, the token is valid for up to 24 hours. If\
+          \ a <code>GetLatestConfiguration</code> call uses an expired token, the\
+          \ system returns <code>BadRequestException</code>.</p> </important>"
+        explode: true
+        in: query
+        name: configuration_token
+        required: true
+        schema:
+          pattern: "\\S{1,8192}"
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLatestConfigurationResponse'
+          description: Success
+        "480":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThrottlingException'
+          description: ThrottlingException
+        "481":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+          description: ResourceNotFoundException
+        "482":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+          description: BadRequestException
+        "483":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+          description: InternalServerException
+      x-accepts:
+      - application/json
+  /configurationsessions:
+    post:
+      description: "Starts a configuration session used to retrieve a deployed configuration.\
+        \ For more information about this API action and to view example CLI commands\
+        \ that show how to use it with the <a>GetLatestConfiguration</a> API action,\
+        \ see <a href=\"http://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-retrieving-the-configuration\"\
+        >Retrieving the configuration</a> in the <i>AppConfig User Guide</i>. "
+      operationId: StartConfigurationSession
+      parameters:
+      - explode: false
+        in: header
+        name: X-Amz-Content-Sha256
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Date
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Algorithm
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Credential
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Security-Token
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-Signature
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: X-Amz-SignedHeaders
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartConfigurationSession_request'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartConfigurationSessionResponse'
+          description: Success
+        "480":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThrottlingException'
+          description: ThrottlingException
+        "481":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+          description: ResourceNotFoundException
+        "482":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+          description: BadRequestException
+        "483":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+          description: InternalServerException
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  parameters:
+    X-Amz-Content-Sha256:
+      explode: false
+      in: header
+      name: X-Amz-Content-Sha256
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-Date:
+      explode: false
+      in: header
+      name: X-Amz-Date
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-Algorithm:
+      explode: false
+      in: header
+      name: X-Amz-Algorithm
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-Credential:
+      explode: false
+      in: header
+      name: X-Amz-Credential
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-Security-Token:
+      explode: false
+      in: header
+      name: X-Amz-Security-Token
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-Signature:
+      explode: false
+      in: header
+      name: X-Amz-Signature
+      required: false
+      schema:
+        type: string
+      style: simple
+    X-Amz-SignedHeaders:
+      explode: false
+      in: header
+      name: X-Amz-SignedHeaders
+      required: false
+      schema:
+        type: string
+      style: simple
+  schemas:
+    GetLatestConfigurationResponse:
+      example:
+        Configuration: ""
+      properties:
+        Configuration:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveBlob'
+          - description: The data of the configuration. This may be empty if the client
+              already has the latest version of configuration.
+      type: object
+    ThrottlingException: {}
+    ResourceNotFoundException: {}
+    BadRequestException: {}
+    InternalServerException: {}
+    StartConfigurationSessionResponse:
+      example:
+        InitialConfigurationToken: ""
+      properties:
+        InitialConfigurationToken:
+          allOf:
+          - $ref: '#/components/schemas/Token'
+          - description: "<p>Token encapsulating state about the configuration session.\
+              \ Provide this token to the <code>GetLatestConfiguration</code> API\
+              \ to retrieve configuration data.</p> <important> <p>This token should\
+              \ only be used once in your first call to <code>GetLatestConfiguration</code>.\
+              \ You <i>must</i> use the new token in the <code>GetLatestConfiguration</code>\
+              \ response (<code>NextPollConfigurationToken</code>) in each subsequent\
+              \ call to <code>GetLatestConfiguration</code>.</p> <p>The <code>InitialConfigurationToken</code>\
+              \ and <code>NextPollConfigurationToken</code> should only be used once.\
+              \ To support long poll use cases, the tokens are valid for up to 24\
+              \ hours. If a <code>GetLatestConfiguration</code> call uses an expired\
+              \ token, the system returns <code>BadRequestException</code>.</p> </important>"
+      type: object
+    Token:
+      pattern: "\\S{1,8192}"
+      type: string
+    GetLatestConfigurationRequest:
+      properties: {}
+      title: GetLatestConfigurationRequest
+      type: object
+    Integer:
+      type: integer
+    String:
+      type: string
+    SensitiveBlob:
+      format: password
+      type: string
+    Identifier:
+      maxLength: 128
+      minLength: 1
+      type: string
+    OptionalPollSeconds:
+      maximum: 86400
+      minimum: 15
+      type: integer
+    StartConfigurationSessionRequest:
+      example:
+        ConfigurationProfileIdentifier: ""
+        EnvironmentIdentifier: ""
+        ApplicationIdentifier: ""
+        RequiredMinimumPollIntervalInSeconds: ""
+      properties:
+        ApplicationIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/Identifier'
+          - description: The application ID or the application name.
+        EnvironmentIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/Identifier'
+          - description: The environment ID or the environment name.
+        ConfigurationProfileIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/Identifier'
+          - description: The configuration profile ID or the configuration profile
+              name.
+        RequiredMinimumPollIntervalInSeconds:
+          allOf:
+          - $ref: '#/components/schemas/OptionalPollSeconds'
+          - description: "Sets a constraint on a session. If you specify a value of,\
+              \ for example, 60 seconds, then the client that established the session\
+              \ can't call <a>GetLatestConfiguration</a> more frequently than every\
+              \ 60 seconds."
+      required:
+      - ApplicationIdentifier
+      - ConfigurationProfileIdentifier
+      - EnvironmentIdentifier
+      title: StartConfigurationSessionRequest
+      type: object
+    StartConfigurationSession_request:
+      properties:
+        ApplicationIdentifier:
+          description: The application ID or the application name.
+          maxLength: 128
+          minLength: 1
+          type: string
+        EnvironmentIdentifier:
+          description: The environment ID or the environment name.
+          maxLength: 128
+          minLength: 1
+          type: string
+        ConfigurationProfileIdentifier:
+          description: The configuration profile ID or the configuration profile name.
+          maxLength: 128
+          minLength: 1
+          type: string
+        RequiredMinimumPollIntervalInSeconds:
+          description: "Sets a constraint on a session. If you specify a value of,\
+            \ for example, 60 seconds, then the client that established the session\
+            \ can't call <a>GetLatestConfiguration</a> more frequently than every\
+            \ 60 seconds."
+          maximum: 86400
+          minimum: 15
+          type: integer
+      required:
+      - ApplicationIdentifier
+      - ConfigurationProfileIdentifier
+      - EnvironmentIdentifier
+      type: object
+  securitySchemes:
+    hmac:
+      description: Amazon Signature authorization v4
+      in: header
+      name: Authorization
+      type: apiKey
+      x-amazon-apigateway-authtype: awsSigv4
+
